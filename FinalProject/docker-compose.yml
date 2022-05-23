@@ -1,0 +1,78 @@
+services:
+  mysql:
+    networks:
+      aboba: null
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+    volumes:
+      - ./code/config/mysql-init.sql:/data/application/mysql-init.sql
+    command: --init-file /data/application/mysql-init.sql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', '-uroot', '-ppass', 'ping', '-h', '127.0.0.1']
+      interval: 3s
+      retries: 5
+    security_opt:
+      - seccomp:unconfined
+
+
+  mock_container:
+    networks:
+      aboba: null
+    image: "vk_mock:latest"
+    volumes:
+      - ./code:/tmp/source_code
+    entrypoint: /bin/bash /tmp/source_code/vk_mock/start_mock.sh
+
+
+  test_app:
+    networks:
+      aboba: null
+    image: myapp
+    ports:
+    - "8086:8086"
+    tty: true
+    entrypoint: /app/myapp --config=/app/app-config
+    volumes:
+      - ./code/config/creds.py:/app/app-config
+      - ./:/FinalProject
+    environment:
+      - USER=root
+      - PASSWORD=pass
+      - HOST=mysql
+      - PORT=3306
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+
+  selenoid:
+    networks:
+      aboba: null
+    image: "aerokube/selenoid:latest"
+    volumes:
+      - ./code/config:/etc/browser
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: [ "-conf", "/etc/browser/browser.json", "-container-network", "aboba" ]
+
+
+  tests:
+    networks:
+      aboba: null
+    image: req
+    tty: true
+    volumes:
+    - ./code:/tmp/code
+    - ./allure-results:/tmp/allure-results
+    entrypoint: /bin/bash /tmp/code/start_tests.sh
+    depends_on:
+      test_app:
+        condition: service_started
+
+
+networks:
+  aboba:
+    external:
+      name: aboba
