@@ -1,0 +1,1 @@
+python3 /tmp/source_code/vk_mock/app.py

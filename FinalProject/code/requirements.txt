@@ -1,0 +1,12 @@
+pytest==6.2.1
+pytest-xdist==2.2.1
+selenium==4.1.5
+allure-pytest==2.8.32
+webdriver-manager==3.3.0
+requests==2.25.1
+Faker==8.0.0
+Appium-Python-Client==1.1.0
+PyMySQL==1.0.2
+SQLAlchemy==1.4.13
+Flask==1.1.2
+apache-log-parser==1.7.0

@@ -1,0 +1,6 @@
+APP_HOST = '0.0.0.0'
+APP_PORT = '8086'
+MYSQL_HOST = 'mysql'
+MYSQL_PORT = '3306'
+MYSQL_DB = 'basefinalproject'
+VK_URL = 'mock_container:4500'

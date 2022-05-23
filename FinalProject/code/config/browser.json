@@ -1,0 +1,15 @@
+{
+    "chrome": {
+        "applicationContainers": ["app:mysqlfinal"],
+        "additionalNetworks": ["my_net"],
+        "default": "100.0",
+        "versions": {
+            "100.0": {
+                "image": "selenoid/chrome:100.0",
+
+                "port": "4444",
+                "env" : ["LANG=ru_RU.UTF-8", "LANGUAGE=ru:en", "LC_ALL=ru_RU.UTF-8"]
+            }
+        }
+    }
+}
