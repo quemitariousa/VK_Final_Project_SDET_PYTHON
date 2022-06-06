@@ -51,8 +51,7 @@ class TestsAuth(BaseApi):
         assert answer.status_code == 200
 
 
-# !!!!!!!!!
-# TODO: Поправить тесты, потому что чето дохуя багов))
+
 class TestsCreateUser(BaseApi):
     # баг сущность создана 201, ТУТ 210 - баг
     @allure.epic('API tests')
