@@ -59,7 +59,7 @@ class ApiClient:
         result = self._request('GET', url)
         return result
 
-    #TODO: как-то бля сделать кастомный юзер рандом
+    
     def user_random(self, name, surname, username, email, password, middlename):
         print(name, surname, username, email, password, middlename)
 
